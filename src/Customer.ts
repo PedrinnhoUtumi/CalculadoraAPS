@@ -25,4 +25,8 @@ export default class Customer {
         return this.name.split(" ")[0];
     }
     
+    getLastName() {
+        return this.name.split(" ")[1];
+    }
+    
 }
