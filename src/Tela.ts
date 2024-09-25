@@ -1,5 +1,5 @@
 
-export default class Display {
+export default class Tela {
     showNumber(value: number) {
         return value;
     }
@@ -8,3 +8,5 @@ export default class Display {
         console.clear()
     }
 }
+
+//limpar tela
