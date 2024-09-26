@@ -18,3 +18,36 @@
 //decimal_separator
 
 //TEM OS DIGITOS TBM -> ACHO QUE ISSO É NO KEYBOARD
+
+export class Cpu {
+    Adicao(valor1: number, valor2: number): void{
+        console.log(valor1 + valor2)
+    }
+
+    Subtracao(valor1: number, valor2: number): void{
+        console.log(valor1 - valor2)
+    }
+
+    Multiplicacao(valor1: number, valor2: number): void{
+        console.log(valor1 * valor2)
+    }
+
+    Divisao(valor1: number, valor2: number): void{
+        if (valor2 !== 0) {
+            console.log(valor1 / valor2)
+        } else {
+            throw new Error("E" + 0)
+        }
+    }
+
+    RaizQuadrada(valor1: number): void{
+        console.log(Math.sqrt(valor1))
+    }
+
+    Exponenciacao(valor1: number, valor2: number): void{
+        console.log(valor1 ** valor2)
+    }
+
+    
+}
+

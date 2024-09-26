@@ -1,12 +1,21 @@
 
-export default class Tela {
-    showNumber(value: number) {
-        return value;
-    }
+// export class Tela {
+//     showNumber(value: number): void {
+//         console.log(value);
+//     }
 
-    clear() {
-        console.clear()
-    }
-}
+//     clear() {
+//         console.clear()
+//     }
+// }
 
-//limpar tela
+// export class MinhaTela extends Tela {
+//     showAlpha(value: string): void {
+//         console.log("[a]" + value)
+//     }
+
+//     override showNumber(value: number): void {
+//         console.log("[n]" + value)
+//     }
+
+// }
