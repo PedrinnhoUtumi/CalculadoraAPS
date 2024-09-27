@@ -43,11 +43,5 @@ export class Cpu {
     RaizQuadrada(valor1: number): void{
         console.log(Math.sqrt(valor1))
     }
-
-    Exponenciacao(valor1: number, valor2: number): void{
-        console.log(valor1 ** valor2)
-    }
-
-    
 }
 

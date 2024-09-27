@@ -18,4 +18,3 @@ try {
 } catch(error) {
     console.error(error)
 }
-d.Exponenciacao(9, 0)
