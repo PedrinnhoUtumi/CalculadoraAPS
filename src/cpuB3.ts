@@ -20,7 +20,7 @@ export default class CpuB3 implements Cpu {
         return this.tela
     }
     recebaDigito(digito: Digito): void {
-        
+        this.recebaDigito(digito)
     }
     reinicie(): void {
         this.tela.limpe()
