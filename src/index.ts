@@ -1,10 +1,14 @@
-// import { Tela } from "./Tela";
-// import { MinhaTela } from "./Tela";
+//index.ts
+import { Controle, Digito, Operação } from "./calculadora";
+import CpuB3 from "./cpuB3";
+import TelaB3 from "./telaB3";
+import TecladoB3 from "./tecladoB3";
 
-// const tela = new Tela();
-// const minhaTela = new MinhaTela()
+const tela = new TelaB3()
+tela.mostre(Digito.ZERO)
+tela.limpe()
+tela.mostre(Digito.UM)
 
-// tela.clear()
-// tela.showNumber(9)
+const cpu = new CpuB3(tela)
 
-// minhaTela.showNumber(213)
+cpu.reinicie()

@@ -1,32 +1,29 @@
-import { Controle, Cpu, Digito, Operação } from "./calculadora";
+import { Controle, Cpu, Digito, Operação, Tela } from "./calculadora";
 
-export default class CpuB3 implements Cpu {
-    receba(digito: Digito): void;
-    receba(operação: Operação): void;
-    receba(controle: Controle): void;
-    receba(controle: unknown): void {
+export default class CpuB3 implements Cpu{
+    tela!: Tela;
+
+    constructor(tela: Tela){
+        this.definaTela(tela);
+    }
+
+    recebaDigito(digito: Digito): void {
+        throw new Error("Method not implemented.");
+    }
+    recebaOperacao(operação: Operação): void {
+        throw new Error("Method not implemented.");
+    }
+    recebaControle(controle: Controle): void {
         throw new Error("Method not implemented.");
     }
     reinicie(): void {
-        this.desative()
-        this.ative()
+        this.tela.limpe();
+        this.tela.mostre(Digito.ZERO);
     }
-
-    ative(): Controle {
-        //limpar
-        return 1;
+    definaTela(tela: Tela): void {
+        this.tela = tela;
     }
-    
-    desative(): Controle {
-        return 0;
+    obtenhaTela(): Tela {
+        return this.tela;
     }
 }
-
-
-
-    // DESATIVAÇÃO,
-    // ATIVAÇÃO_LIMPEZA_ERRO,
-    // MEMÓRIA_LEITURA_LIMPEZA,
-    // MEMÓRIA_SOMA,
-    // MEMÓRIA_SUBTRAÇÃO,
-    // SEPARADOR_DECIMAL,
