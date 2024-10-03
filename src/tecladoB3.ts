@@ -1,4 +1,5 @@
 import { Controle, Cpu, Digito, Operação, Teclado } from "./calculadora";
+import CpuB3 from "./cpuB3";
 
 export default class TecladoB3 implements Teclado {
     cpu!: Cpu;
@@ -8,13 +9,14 @@ export default class TecladoB3 implements Teclado {
     }
 
     digiteDigito(digito: Digito): void{
-        throw new Error("Method not implemented.");
+        this.cpu.recebaDigito(digito)
+        
     }
     digiteOperacao(operação: Operação): void{
-        throw new Error("Method not implemented.");
+        
     }
     digiteControle(controle: Controle): void{
-        throw new Error("Method not implemented.");
+        
     }
     definaCpu(cpu: Cpu): void {
         this.cpu = cpu

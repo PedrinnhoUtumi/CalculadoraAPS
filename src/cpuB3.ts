@@ -2,6 +2,7 @@ import { Controle, Cpu, Digito, Operação, Tela } from "./calculadora";
 
 export default class CpuB3 implements Cpu {
     tela!: Tela;
+
     constructor(tela: Tela) {
         this.definaTela(tela)
     }
@@ -19,13 +20,8 @@ export default class CpuB3 implements Cpu {
         return this.tela
     }
     recebaDigito(digito: Digito): void {
-        throw new Error("Method not implemented.");
+        
     }
-    // receba(operação: Operação): void;
-    // receba(controle: Controle): void;
-    // receba(controle: unknown): void {
-    //     throw new Error("Method not implemented.");
-    // }
     reinicie(): void {
         this.tela.limpe()
         this.tela.mostre(Digito.ZERO)
