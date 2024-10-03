@@ -6,8 +6,7 @@ import TecladoB3 from "./tecladoB3";
 
 const tela = new TelaB3()
 tela.mostre(Digito.ZERO)
-tela.limpe()
-tela.mostre(Digito.UM)
+tela.mostre(Digito.DOIS)
 
 const cpu = new CpuB3(tela)
 

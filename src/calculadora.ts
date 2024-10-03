@@ -1,5 +1,5 @@
 export enum Digito {
-  ZERO = 0,
+  ZERO,
   UM,
   DOIS,
   TRÊS,
