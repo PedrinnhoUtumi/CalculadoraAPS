@@ -9,7 +9,7 @@ export default class TecladoB3 implements Teclado {
     }
 
     digiteDigito(digito: Digito): void{
-        this.cpu.recebaDigito(digito)
+        this.cpu.recebaDigito(digito);
         
     }
     digiteOperacao(operação: Operação): void{

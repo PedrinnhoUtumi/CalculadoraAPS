@@ -27,6 +27,7 @@ export enum Controle {
   MEMÓRIA_SOMA,
   MEMÓRIA_SUBTRAÇÃO,
   SEPARADOR_DECIMAL,
+  IGUAL,
 }
 
 export interface Tela {

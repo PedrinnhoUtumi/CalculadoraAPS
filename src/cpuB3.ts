@@ -1,4 +1,5 @@
 import { Controle, Cpu, Digito, Operação, Tela } from "./calculadora";
+import {  } from "./tecladoB3"
 
 export default class CpuB3 implements Cpu {
     tela!: Tela;
@@ -7,6 +8,11 @@ export default class CpuB3 implements Cpu {
         this.definaTela(tela)
     }
     
+    recebaDigito(digito: Digito): void {
+        // guarda o digito que chegou
+        // se for o primeiro digito, limpa a tela
+        // envia o digito para a tela
+    }
     recebaOperacao(operação: Operação): void {
         throw new Error("Method not implemented.");
     }
@@ -18,9 +24,6 @@ export default class CpuB3 implements Cpu {
     }
     obtenhaTela(): Tela {
         return this.tela
-    }
-    recebaDigito(digito: Digito): void {
-        this.recebaDigito(digito)
     }
     reinicie(): void {
         this.tela.limpe()
