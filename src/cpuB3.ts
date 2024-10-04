@@ -3,9 +3,8 @@ import { Controle, Cpu, Digito, Operação, Tela } from "./calculadora";
 export default class CpuB3 implements Cpu {
     tela!: Tela;
     listaPrimeiroNumero: Digito[] = [];
-    listaSegundoNumero: Digito[] = [];
-    listaOperador: Operação[] = [];
-    
+    listaSegundoNumero: Digito[] = [];   
+    #operador!: Operação;  
 
     constructor(tela: Tela) {
         this.definaTela(tela)
@@ -21,14 +20,10 @@ export default class CpuB3 implements Cpu {
         }
     }
     recebaOperacao(operação: Operação): void {
-        if (this.listaOperador.length === 0) {
-            this.#armazenaOperador(operação)
-        } else {
-            throw new Error("Method not implemented.");      
-        } 
+        this.#operador = operação
     }
     recebaControle(controle: Controle): void {
-            
+        this.#igual()
     }
     definaTela(tela: Tela): void {
         this.tela = tela
@@ -48,8 +43,14 @@ export default class CpuB3 implements Cpu {
         this.listaSegundoNumero.push(digito2)
         this.tela.mostre(this.listaSegundoNumero[0]);
     }
-    #armazenaOperador(operador: Operação): void {
-        this.listaOperador.push(operador)
+    #some(): void {
+        let resultado = this.listaPrimeiroNumero[0] + this.listaSegundoNumero[0]
+    }
+    #igual(operacao = this.#operador): void {
+        switch(operacao) {
+            case 0:
+                console.log(this.#some());
+        }
     }
 }
 

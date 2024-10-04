@@ -13,3 +13,5 @@ const cpu = new CpuB3(tela)
 const teclado = new TecladoB3(cpu)
 let a = teclado.digiteDigito(Digito.TRÊS)
 let b = teclado.digiteDigito(Digito.DOIS)
+let c = teclado.digiteOperacao(Operação.SOMA)
+
