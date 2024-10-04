@@ -1,8 +1,10 @@
 import { Controle, Cpu, Digito, Operação, Tela } from "./calculadora";
-import {  } from "./tecladoB3"
 
 export default class CpuB3 implements Cpu {
     tela!: Tela;
+    lista1: Digito[] = [];
+    lista2: Digito[] = [];
+    
 
     constructor(tela: Tela) {
         this.definaTela(tela)
@@ -10,8 +12,12 @@ export default class CpuB3 implements Cpu {
     
     recebaDigito(digito: Digito): void {
         // guarda o digito que chegou
-        // se for o primeiro digito, limpa a tela
-        // envia o digito para a tela
+        if(this.lista1.length === 0) {
+            this.tela.limpe()
+            this.#armazenaPrimeiroNumero(digito)
+        } else {
+            this.#armazenaSegundoNumero(digito)
+        }
     }
     recebaOperacao(operação: Operação): void {
         throw new Error("Method not implemented.");
@@ -28,6 +34,14 @@ export default class CpuB3 implements Cpu {
     reinicie(): void {
         this.tela.limpe()
         this.tela.mostre(Digito.ZERO)
+    }
+    #armazenaPrimeiroNumero(digito1: Digito): void {
+        this.lista1.push(digito1)
+        this.tela.mostre(this.lista1[0]);
+    }
+    #armazenaSegundoNumero(digito2: Digito): void {
+        this.lista2.push(digito2)
+        this.tela.mostre(this.lista2[0]);
     }
 }
 
