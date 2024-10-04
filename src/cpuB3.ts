@@ -2,8 +2,9 @@ import { Controle, Cpu, Digito, Operação, Tela } from "./calculadora";
 
 export default class CpuB3 implements Cpu {
     tela!: Tela;
-    lista1: Digito[] = [];
-    lista2: Digito[] = [];
+    listaPrimeiroNumero: Digito[] = [];
+    listaSegundoNumero: Digito[] = [];
+    listaOperador: Operação[] = [];
     
 
     constructor(tela: Tela) {
@@ -12,7 +13,7 @@ export default class CpuB3 implements Cpu {
     
     recebaDigito(digito: Digito): void {
         // guarda o digito que chegou
-        if(this.lista1.length === 0) {
+        if(this.listaPrimeiroNumero.length === 0) {
             this.tela.limpe()
             this.#armazenaPrimeiroNumero(digito)
         } else {
@@ -20,10 +21,14 @@ export default class CpuB3 implements Cpu {
         }
     }
     recebaOperacao(operação: Operação): void {
-        throw new Error("Method not implemented.");
+        if (this.listaOperador.length === 0) {
+            this.#armazenaOperador(operação)
+        } else {
+            throw new Error("Method not implemented.");      
+        } 
     }
     recebaControle(controle: Controle): void {
-        throw new Error("Method not implemented.");
+            
     }
     definaTela(tela: Tela): void {
         this.tela = tela
@@ -36,12 +41,15 @@ export default class CpuB3 implements Cpu {
         this.tela.mostre(Digito.ZERO)
     }
     #armazenaPrimeiroNumero(digito1: Digito): void {
-        this.lista1.push(digito1)
-        this.tela.mostre(this.lista1[0]);
+        this.listaPrimeiroNumero.push(digito1)
+        this.tela.mostre(this.listaPrimeiroNumero[0]);
     }
     #armazenaSegundoNumero(digito2: Digito): void {
-        this.lista2.push(digito2)
-        this.tela.mostre(this.lista2[0]);
+        this.listaSegundoNumero.push(digito2)
+        this.tela.mostre(this.listaSegundoNumero[0]);
+    }
+    #armazenaOperador(operador: Operação): void {
+        this.listaOperador.push(operador)
     }
 }
 
