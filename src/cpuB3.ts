@@ -25,7 +25,9 @@ export default class CpuB3 implements Cpu {
         this.tela.mostre(digito)
     }
     recebaOperacao(operação: Operação): void {
-        console.log(this.#listaSegundoNumero);
+        if (operação === Operação.RAIZ_QUADRADA) {
+            this.raizQuadrade()
+        }
         if (this.#operador !== undefined && this.#listaSegundoNumero.length !== 0) {
             this.recebaControle(Controle.IGUAL)            
         }
@@ -76,14 +78,6 @@ export default class CpuB3 implements Cpu {
         })
     }
 
-    #verifiqueOperador(numero: number): void{
-        // if (this.#operador !== undefined && this.#operador !== null) {
-        //     this.#mostreDigitos(this.#ConvertaNumerosParaDigitos(numero))
-        //     let n: number = this.#ConvertaDigitosParaNumeros(this.#listaSegundoNumero)
-        //     numero = numero + n
-        // }
-    }
-
     some(): void {
         let numero1: number = this.#ConvertaDigitosParaNumeros(this.#listaPrimeiroNumero)
         let numero2: number = this.#ConvertaDigitosParaNumeros(this.#listaSegundoNumero)
@@ -92,7 +86,6 @@ export default class CpuB3 implements Cpu {
 
         this.#listaPrimeiroNumero = this.#ConvertaNumerosParaDigitos(resultado) 
         this.#listaSegundoNumero = []
-        // this.#verifiqueOperador(resultado)
     
         this.#mostreDigitos(this.#listaPrimeiroNumero)
     }
@@ -102,6 +95,9 @@ export default class CpuB3 implements Cpu {
         
         let resultado = numero1 - numero2
     
+        this.#listaPrimeiroNumero = this.#ConvertaNumerosParaDigitos(resultado) 
+        this.#listaSegundoNumero = []
+
         this.#mostreDigitos(this.#ConvertaNumerosParaDigitos(resultado))
     }
     multiplique(): void {
@@ -110,6 +106,9 @@ export default class CpuB3 implements Cpu {
         
         let resultado = numero1 * numero2
     
+        this.#listaPrimeiroNumero = this.#ConvertaNumerosParaDigitos(resultado) 
+        this.#listaSegundoNumero = []
+
         this.#mostreDigitos(this.#ConvertaNumerosParaDigitos(resultado))
     }
     divida(): void {
@@ -121,13 +120,36 @@ export default class CpuB3 implements Cpu {
             console.error("E0")
         } else {
             let resultado = numero1 / numero2
+            
+            this.#listaPrimeiroNumero = this.#ConvertaNumerosParaDigitos(resultado) 
+            this.#listaSegundoNumero = []
+
             this.#mostreDigitos(this.#ConvertaNumerosParaDigitos(resultado))
         }
     }
-    raizQuadrade(): number {
-        let resultado = Math.sqrt(this.#listaPrimeiroNumero[0])
-        return resultado
-    }
+    raizQuadrade(): void {
+        let numero1: number;
+        // Verifica se pega o primeiro ou o segundo
+        if (this.#operador !== undefined) {
+            numero1 = this.#ConvertaDigitosParaNumeros(this.#listaSegundoNumero)
+        } else {
+            numero1 = this.#ConvertaDigitosParaNumeros(this.#listaPrimeiroNumero)
+        }
+
+        // Calcula a raiz
+        let resultado = numero1 ** 0.5
+        let resultadoDigitos = this.#ConvertaNumerosParaDigitos(resultado)
+        
+        
+        // Armazena o resutado no destino correto
+        if (this.#operador !== undefined) {
+            this.#listaSegundoNumero = resultadoDigitos 
+        } else {
+            this.#listaPrimeiroNumero = resultadoDigitos 
+        }
+
+        this.#mostreDigitos(resultadoDigitos)
+}
     percentue(): number {
         let resultado = this.#listaPrimeiroNumero[0] / 100
         return resultado
@@ -147,7 +169,7 @@ export default class CpuB3 implements Cpu {
                 this.divida()
                 break
             case Operação.RAIZ_QUADRADA:
-                this.tela.mostre(this.raizQuadrade())
+                this.raizQuadrade()
                 break
             case Operação.PERCENTUAL:
                 this.tela.mostre(this.percentue())
