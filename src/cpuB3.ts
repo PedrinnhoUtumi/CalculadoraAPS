@@ -4,7 +4,8 @@ export default class CpuB3 implements Cpu {
     tela!: Tela;
     #listaPrimeiroNumero: Digito[] = [];
     #listaSegundoNumero: Digito[] = [];   
-    #operador: Operação | undefined = undefined;  
+    #operador: Operação | undefined = undefined; 
+    #separadorDecimal: Controle | undefined = undefined;
 
     constructor(tela: Tela) {
         this.definaTela(tela)
@@ -37,6 +38,10 @@ export default class CpuB3 implements Cpu {
         switch(controle){
             case Controle.IGUAL:
                 this.igual()
+                break
+            case Controle.SEPARADOR_DECIMAL:
+                //
+                break
         }
     }
     definaTela(tela: Tela): void {
@@ -50,9 +55,21 @@ export default class CpuB3 implements Cpu {
         this.tela.mostre(Digito.ZERO)
     }
 
+    #temSeparador(): boolean {
+        if (this.#separadorDecimal !== undefined) {
+            return true
+        }
+        return false
+    }
+
     #ConvertaDigitosParaNumeros(digitos: Digito[]): number{
         let resultado = 0
         digitos.forEach(digito => {
+            if (this.#temSeparador()) {
+                let contador = digitos.length
+                resultado = resultado / 10 + digito
+                
+            }
             resultado = resultado * 10 + digito
         });
         return resultado
