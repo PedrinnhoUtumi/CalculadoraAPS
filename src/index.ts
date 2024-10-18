@@ -10,7 +10,7 @@ tela.limpe()
 const cpu = new CpuB3(tela)
 
 const teclado = new TecladoB3(cpu)
-teclado.digiteDigito(Digito.QUATRO)
+teclado.digiteDigito(Digito.TRÊS)
 teclado.digiteOperacao(Operação.RAIZ_QUADRADA)
 teclado.digiteOperacao(Operação.SOMA)
 teclado.digiteDigito(Digito.UM)
