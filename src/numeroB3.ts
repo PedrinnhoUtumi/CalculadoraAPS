@@ -1,9 +1,14 @@
 import { Digito, Sinal } from "./calculadora";
 
-export class numeroB3 {
+export class NumeroB3 {
     digitos: Digito[] = []
     posicaoSeparadorDecimal: number = 0
     sinal: Sinal = Sinal.POSITIVO
+
+    constructor(){
+
+    }
+
 
     #temSeparador(): boolean {
         if(this.posicaoSeparadorDecimal === 0) {
@@ -12,20 +17,24 @@ export class numeroB3 {
         return true
     }
 
-    ConvertaDigitosParaNumeros(digitos: Digito[]): number {
+    temDigito(): boolean {
+        return this.digitos.length > 0
+    }
+
+    convertaDigitosParaNumeros(): number {
         let resultado = 0
-        digitos.forEach(digito => {
+        this.digitos.forEach(digito => {
             if (this.#temSeparador()) {
-                let contador = digitos.length
+                let contador = this.digitos.length
                 resultado = resultado / 10 + digito
 
             }
             resultado = resultado * 10 + digito
         });
-        return resultado / (10 ^ (this.digitos.length - this.posicaoSeparadorDecimal));
+        return resultado 
     }
 
-    ConvertaNumerosParaDigitos(resultado: number): Digito[] {
+    convertaNumerosParaDigitos(resultado: number): void {
         let result: Digito[] = []
         while (resultado > 0) {
             let digito = resultado % 10
@@ -35,7 +44,7 @@ export class numeroB3 {
         if (result.length === 0) {
             result.push(Digito.ZERO)
         }
-        return result.reverse()
+        this.digitos = result.reverse()
     }
 
 

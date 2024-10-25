@@ -1,14 +1,13 @@
 import { Controle, Cpu, Digito, Operação, Tela, Sinal } from "./calculadora";
-import { numeroB3 } from "./numeroB3";
+import { NumeroB3 } from "./numeroB3";
 
 
 export default class CpuB3 implements Cpu {
     tela!: Tela;
-    #listaPrimeiroNumero: Digito[] = [];
-    #listaSegundoNumero: Digito[] = [];   
+    #operando1: NumeroB3 = new NumeroB3();
+    #operando2: NumeroB3 = new NumeroB3();
     #operador: Operação | undefined = undefined; 
     #separadorDecimal: Controle | undefined = undefined;
-    numero!: numeroB3;
 
     constructor(tela: Tela) {
         this.definaTela(tela)
@@ -16,23 +15,24 @@ export default class CpuB3 implements Cpu {
     
     recebaDigito(digito: Digito): void {
         if(this.#operador === undefined) {
-            if (this.#listaPrimeiroNumero.length === 0) {
+            if (!this.#operando1.temDigito()) {
                 this.tela.limpe()
             }
-            this.#listaPrimeiroNumero.push(digito)
+            this.#operando1.digitos.push(digito)
         } else {
-            if (this.#listaSegundoNumero.length === 0) {
+            if (!this.#operando2.temDigito()) {
                 this.tela.limpe()
             }
-            this.#listaSegundoNumero.push(digito)
+            this.#operando2.digitos.push(digito)
         }
         this.tela.mostre(digito)
     }
     recebaOperacao(operação: Operação): void {
         if (operação === Operação.RAIZ_QUADRADA) {
-            this.raizQuadrade()
+            this.radicie()
+            return
         }
-        if (this.#operador !== undefined && this.#listaSegundoNumero.length !== 0) {
+        if (this.#operador !== undefined && this.#operando2.temDigito()) {
             this.recebaControle(Controle.IGUAL)            
         }
         this.#operador = operação
@@ -65,7 +65,7 @@ export default class CpuB3 implements Cpu {
     //     return false
     // }
 
-    // numero.ConvertaDigitosParaNumeros(digitos: Digito[]): number{
+    // numero.convertaDigitosParaNumeros(digitos: Digito[]): number{
     //     let resultado = 0
     //     digitos.forEach(digito => {
     //         if (this.#temSeparador()) {
@@ -78,7 +78,7 @@ export default class CpuB3 implements Cpu {
     //     return resultado
     // }
 
-    // numero.ConvertaNumerosParaDigitos(resultado: number): Digito[]{
+    // numero.convertaNumerosParaDigitos(resultado: number): Digito[]{
     //     let result: Digito[] = []
     //     while (resultado > 0) {
     //         let digito = resultado % 10
@@ -92,90 +92,94 @@ export default class CpuB3 implements Cpu {
     // }
 
     #mostreDigitos(digitos: Digito[]): void {
-        this.tela.limpe()
+        // this.tela.limpe()
         digitos.forEach(digito => {
-            this.tela.mostre(digito)            
+            this.tela.mostre(digito)
+            
         })
     }
 
     some(): void {
-        let numero1: number = this.numero.ConvertaDigitosParaNumeros(this.#listaPrimeiroNumero)
-        let numero2: number = this.numero.ConvertaDigitosParaNumeros(this.#listaSegundoNumero)
+        let numero1: number = this.#operando1.convertaDigitosParaNumeros()
+        let numero2: number = this.#operando2.convertaDigitosParaNumeros()
         
         let resultado = numero1 + numero2
 
-        this.#listaPrimeiroNumero = this.numero.ConvertaNumerosParaDigitos(resultado) 
-        this.#listaSegundoNumero = []
-    
-        this.#mostreDigitos(this.#listaPrimeiroNumero)
+        this.#operando1.convertaNumerosParaDigitos(resultado) 
+
+        this.#mostreDigitos(this.#operando1.digitos)
     }
     diminua(): void {
-        let numero1: number = this.numero.ConvertaDigitosParaNumeros(this.#listaPrimeiroNumero)
-        let numero2: number = this.numero.ConvertaDigitosParaNumeros(this.#listaSegundoNumero)
+        let numero1: number = this.#operando1.convertaDigitosParaNumeros()
+        let numero2: number = this.#operando2.convertaDigitosParaNumeros()
         
         let resultado = numero1 - numero2
-    
-        this.#listaPrimeiroNumero = this.numero.ConvertaNumerosParaDigitos(resultado) 
-        this.#listaSegundoNumero = []
 
-        this.#mostreDigitos(this.numero.ConvertaNumerosParaDigitos(resultado))
+        this.#operando1.convertaNumerosParaDigitos(resultado) 
+    
+        this.#mostreDigitos(this.#operando1.digitos)
     }
     multiplique(): void {
-        let numero1: number = this.numero.ConvertaDigitosParaNumeros(this.#listaPrimeiroNumero)
-        let numero2: number = this.numero.ConvertaDigitosParaNumeros(this.#listaSegundoNumero)
+        let numero1: number = this.#operando1.convertaDigitosParaNumeros()
+        let numero2: number = this.#operando2.convertaDigitosParaNumeros()
         
         let resultado = numero1 * numero2
-    
-        this.#listaPrimeiroNumero = this.numero.ConvertaNumerosParaDigitos(resultado) 
-        this.#listaSegundoNumero = []
 
-        this.#mostreDigitos(this.numero.ConvertaNumerosParaDigitos(resultado))
+        this.#operando1.convertaNumerosParaDigitos(resultado) 
+    
+        this.#mostreDigitos(this.#operando1.digitos)
     }
     divida(): void {
-        let numero1: number = this.numero.ConvertaDigitosParaNumeros(this.#listaPrimeiroNumero)
-        let numero2: number = this.numero.ConvertaDigitosParaNumeros(this.#listaSegundoNumero)
-        
+        let numero1: number = this.#operando1.convertaDigitosParaNumeros()
+        let numero2: number = this.#operando2.convertaDigitosParaNumeros()
+
         if (numero2 === 0) {
-            this.tela.limpe()
-            console.error("E0")
+            this.tela.mostreErro()
+
         } else {
             let resultado = numero1 / numero2
             
-            this.#listaPrimeiroNumero = this.numero.ConvertaNumerosParaDigitos(resultado) 
-            this.#listaSegundoNumero = []
+            this.#operando1.convertaNumerosParaDigitos(resultado) 
 
-            this.#mostreDigitos(this.numero.ConvertaNumerosParaDigitos(resultado))
+            this.#mostreDigitos(this.#operando1.digitos)
         }
     }
-    raizQuadrade(): void {
+    radicie(): void {
         let numero1: number;
         // Verifica se pega o primeiro ou o segundo
         if (this.#operador !== undefined) {
-            numero1 = this.numero.ConvertaDigitosParaNumeros(this.#listaSegundoNumero)
+            numero1 = this.#operando2.convertaDigitosParaNumeros()
         } else {
-            numero1 = this.numero.ConvertaDigitosParaNumeros(this.#listaPrimeiroNumero)
+            numero1 = this.#operando1.convertaDigitosParaNumeros()
         }
 
         // Calcula a raiz
-        let resultado = numero1 ** 0.5
-        let resultadoDigitos = this.numero.ConvertaNumerosParaDigitos(resultado)
-        
+        let resultado = numero1 ** 0.5        
         
         // Armazena o resutado no destino correto
         if (this.#operador !== undefined) {
-            this.#listaSegundoNumero = resultadoDigitos 
+            this.#operando2.convertaNumerosParaDigitos(resultado) 
+            this.#mostreDigitos(this.#operando2.digitos)
         } else {
-            this.#listaPrimeiroNumero = resultadoDigitos 
+            this.#operando1.convertaNumerosParaDigitos(resultado) 
+            this.#mostreDigitos(this.#operando1.digitos)
         }
+        
 
-        this.#mostreDigitos(resultadoDigitos)
-}
-    percentue(): number {
-        let resultado = this.#listaPrimeiroNumero[0] / 100
-        return resultado
     }
-    igual(operacao = this.#operador): void {
-        switch(operacao){
+    percentue(): void {
+        let numero1: number = this.#operando1.convertaDigitosParaNumeros()
+        let numero2: number = this.#operando2.convertaDigitosParaNumeros()
+
+        let resultado = (numero1 * numero2) / 100
+        
+        this.#operando2.convertaNumerosParaDigitos(resultado)
+
+        this.recebaControle(Controle.IGUAL)
+
+    }
+    igual(): void {
+        switch(this.#operador){
             case Operação.SOMA:
                 this.some()
                 break
@@ -188,22 +192,6 @@ export default class CpuB3 implements Cpu {
             case Operação.DIVISÃO:
                 this.divida()
                 break
-            case Operação.RAIZ_QUADRADA:
-                this.raizQuadrade()
-                break
-            case Operação.PERCENTUAL:
-                this.tela.mostre(this.percentue())
-                break
         }
     }
 }
-
-
-
-
-    // DESATIVAÇÃO,
-    // ATIVAÇÃO_LIMPEZA_ERRO,
-    // MEMÓRIA_LEITURA_LIMPEZA,
-    // MEMÓRIA_SOMA,
-    // MEMÓRIA_SUBTRAÇÃO,
-    // SEPARADOR_DECIMAL,
