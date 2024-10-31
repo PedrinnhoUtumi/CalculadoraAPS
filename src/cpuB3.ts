@@ -8,6 +8,9 @@ export default class CpuB3 implements Cpu {
     #operando2: NumeroB3 = new NumeroB3();
     #operador: Operação | undefined = undefined; 
     #separadorDecimal: Controle | undefined = undefined;
+    #memoria: NumeroB3 = new NumeroB3();
+    #operacaoCorrente: Operação | undefined = undefined;
+    #historicoControle: Controle | undefined = undefined
 
     constructor(tela: Tela) {
         this.definaTela(tela)
@@ -36,6 +39,7 @@ export default class CpuB3 implements Cpu {
             this.recebaControle(Controle.IGUAL)            
         }
         this.#operador = operação
+        this.#operacaoCorrente = operação
     }
     recebaControle(controle: Controle): void {
         switch(controle){
@@ -51,7 +55,15 @@ export default class CpuB3 implements Cpu {
                         this.#operando2.posicaoSeparadorDecimal = this.#operando2.digitos.length
                 }
                 break
+            // case Controle.DESATIVAÇÃO:
+            // case Controle.ATIVAÇÃO_LIMPEZA_ERRO:
+            // case Controle.MEMÓRIA_LEITURA_LIMPEZA:
+            //     if 
+            // case Controle.MEMÓRIA_SOMA:
+            // case Controle.MEMÓRIA_SUBTRAÇÃO:
         }
+        this.#historicoControle = controle
+
     }
     definaTela(tela: Tela): void {
         this.tela = tela
@@ -66,17 +78,18 @@ export default class CpuB3 implements Cpu {
 
     #mostreNumero(numero: NumeroB3): void {
         this.tela.limpe()
+        
         numero.digitos.forEach(digito => {
             this.tela.mostre(digito)
             
         })
-        this.tela.mostreSinal(numero.sinal)
+       this.tela.mostreSinal(numero.sinal)
     }
 
     #some(): void {
         let numero1: number = this.#operando1.convertaDigitosParaNumeros()
         let numero2: number = this.#operando2.convertaDigitosParaNumeros()
-        
+
         let resultado = numero1 + numero2
 
         this.#operando1.convertaNumerosParaDigitos(resultado) 

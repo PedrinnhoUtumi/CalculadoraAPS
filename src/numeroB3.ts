@@ -21,13 +21,13 @@ export class NumeroB3 {
     convertaDigitosParaNumeros(): number {
         let resultado = 0
         this.digitos.forEach(digito => {
-            if (this.temSeparador()) {
-                let contador = this.digitos.length
-                resultado = resultado / 10 + digito
-            }
+            // if (this.temSeparador()) {
+            //     let contador = this.digitos.length
+            //     resultado = resultado / 10 + digito
+            // }
             resultado = resultado * 10 + digito
         });
-        resultado = resultado / (10 ** this.digitos.length - this.posicaoSeparadorDecimal)
+        resultado = resultado //(10 ** this.digitos.length - this.posicaoSeparadorDecimal)
         return resultado * (this.sinal == Sinal.NEGATIVO?-1:1)
     }
 
@@ -44,6 +44,4 @@ export class NumeroB3 {
         this.digitos = result.reverse()
         this.sinal = resultado>=0?Sinal.POSITIVO:Sinal.NEGATIVO
     }
-
-
 }
