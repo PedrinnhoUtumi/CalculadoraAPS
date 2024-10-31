@@ -8,7 +8,7 @@ export default class TelaB3 implements Tela {
         console.log("..\n..\n");
     }
     mostreSinal(sinal: Sinal): void {
-        if (sinal === Sinal.NEGATIVO) "-----\n";
+        if (sinal === Sinal.NEGATIVO) +"-----\n";
     }
     mostreErro(): void {
         console.log("EEEE\nE   \nEE  \nE   \nEEEE\n");
@@ -18,6 +18,6 @@ export default class TelaB3 implements Tela {
     }
 
     limpe(): void {
-        // console.clear()
+        console.clear()
     }
 }

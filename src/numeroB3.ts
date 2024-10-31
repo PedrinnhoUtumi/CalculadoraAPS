@@ -10,11 +10,8 @@ export class NumeroB3 {
     }
 
 
-    #temSeparador(): boolean {
-        if(this.posicaoSeparadorDecimal === 0) {
-            return false
-        }
-        return true
+    temSeparador(): boolean {
+        return this.posicaoSeparadorDecimal === 0
     }
 
     temDigito(): boolean {
@@ -24,14 +21,14 @@ export class NumeroB3 {
     convertaDigitosParaNumeros(): number {
         let resultado = 0
         this.digitos.forEach(digito => {
-            if (this.#temSeparador()) {
+            if (this.temSeparador()) {
                 let contador = this.digitos.length
                 resultado = resultado / 10 + digito
-
             }
             resultado = resultado * 10 + digito
         });
-        return resultado 
+        resultado = resultado / (10 ** this.digitos.length - this.posicaoSeparadorDecimal)
+        return resultado * (this.sinal == Sinal.NEGATIVO?-1:1)
     }
 
     convertaNumerosParaDigitos(resultado: number): void {
@@ -45,6 +42,7 @@ export class NumeroB3 {
             result.push(Digito.ZERO)
         }
         this.digitos = result.reverse()
+        this.sinal = resultado>=0?Sinal.POSITIVO:Sinal.NEGATIVO
     }
 
 

@@ -25,11 +25,11 @@ export default class CpuB3 implements Cpu {
             }
             this.#operando2.digitos.push(digito)
         }
-        this.tela.mostre(digito)
+        this.tela.mostre(digito)        
     }
     recebaOperacao(operação: Operação): void {
         if (operação === Operação.RAIZ_QUADRADA) {
-            this.radicie()
+            this.#radicie()
             return
         }
         if (this.#operador !== undefined && this.#operando2.temDigito()) {
@@ -40,10 +40,16 @@ export default class CpuB3 implements Cpu {
     recebaControle(controle: Controle): void {
         switch(controle){
             case Controle.IGUAL:
-                this.igual()
+                this.#igual()
                 break
             case Controle.SEPARADOR_DECIMAL:
-                //
+                if(this.#operador === undefined){
+                    if(this.#operando1.posicaoSeparadorDecimal===0)
+                        this.#operando1.posicaoSeparadorDecimal = this.#operando1.digitos.length
+                }else{
+                    if(this.#operando2.posicaoSeparadorDecimal===0)
+                        this.#operando2.posicaoSeparadorDecimal = this.#operando2.digitos.length
+                }
                 break
         }
     }
@@ -58,48 +64,16 @@ export default class CpuB3 implements Cpu {
         this.tela.mostre(Digito.ZERO)
     }
 
-    // #temSeparador(): boolean {
-    //     if (this.#separadorDecimal !== undefined) {
-    //         return true
-    //     }
-    //     return false
-    // }
-
-    // numero.convertaDigitosParaNumeros(digitos: Digito[]): number{
-    //     let resultado = 0
-    //     digitos.forEach(digito => {
-    //         if (this.#temSeparador()) {
-    //             let contador = digitos.length
-    //             resultado = resultado / 10 + digito
-                
-    //         }
-    //         resultado = resultado * 10 + digito
-    //     });
-    //     return resultado
-    // }
-
-    // numero.convertaNumerosParaDigitos(resultado: number): Digito[]{
-    //     let result: Digito[] = []
-    //     while (resultado > 0) {
-    //         let digito = resultado % 10
-    //         result.push(digito)
-    //         resultado = (resultado - digito) / 10
-    //     }
-    //     if(result.length === 0) {
-    //         result.push(Digito.ZERO)
-    //     }
-    //     return result.reverse()
-    // }
-
-    #mostreDigitos(digitos: Digito[]): void {
-        // this.tela.limpe()
-        digitos.forEach(digito => {
+    #mostreNumero(numero: NumeroB3): void {
+        this.tela.limpe()
+        numero.digitos.forEach(digito => {
             this.tela.mostre(digito)
             
         })
+        this.tela.mostreSinal(numero.sinal)
     }
 
-    some(): void {
+    #some(): void {
         let numero1: number = this.#operando1.convertaDigitosParaNumeros()
         let numero2: number = this.#operando2.convertaDigitosParaNumeros()
         
@@ -107,9 +81,9 @@ export default class CpuB3 implements Cpu {
 
         this.#operando1.convertaNumerosParaDigitos(resultado) 
 
-        this.#mostreDigitos(this.#operando1.digitos)
+        this.#mostreNumero(this.#operando1)
     }
-    diminua(): void {
+    #diminua(): void {
         let numero1: number = this.#operando1.convertaDigitosParaNumeros()
         let numero2: number = this.#operando2.convertaDigitosParaNumeros()
         
@@ -117,9 +91,9 @@ export default class CpuB3 implements Cpu {
 
         this.#operando1.convertaNumerosParaDigitos(resultado) 
     
-        this.#mostreDigitos(this.#operando1.digitos)
+        this.#mostreNumero(this.#operando1)
     }
-    multiplique(): void {
+    #multiplique(): void {
         let numero1: number = this.#operando1.convertaDigitosParaNumeros()
         let numero2: number = this.#operando2.convertaDigitosParaNumeros()
         
@@ -127,9 +101,9 @@ export default class CpuB3 implements Cpu {
 
         this.#operando1.convertaNumerosParaDigitos(resultado) 
     
-        this.#mostreDigitos(this.#operando1.digitos)
+        this.#mostreNumero(this.#operando1)
     }
-    divida(): void {
+    #divida(): void {
         let numero1: number = this.#operando1.convertaDigitosParaNumeros()
         let numero2: number = this.#operando2.convertaDigitosParaNumeros()
 
@@ -141,10 +115,10 @@ export default class CpuB3 implements Cpu {
             
             this.#operando1.convertaNumerosParaDigitos(resultado) 
 
-            this.#mostreDigitos(this.#operando1.digitos)
+            this.#mostreNumero(this.#operando1)
         }
     }
-    radicie(): void {
+    #radicie(): void {
         let numero1: number;
         // Verifica se pega o primeiro ou o segundo
         if (this.#operador !== undefined) {
@@ -159,15 +133,15 @@ export default class CpuB3 implements Cpu {
         // Armazena o resutado no destino correto
         if (this.#operador !== undefined) {
             this.#operando2.convertaNumerosParaDigitos(resultado) 
-            this.#mostreDigitos(this.#operando2.digitos)
+            this.#mostreNumero(this.#operando2)
         } else {
             this.#operando1.convertaNumerosParaDigitos(resultado) 
-            this.#mostreDigitos(this.#operando1.digitos)
+            this.#mostreNumero(this.#operando1)
         }
         
 
     }
-    percentue(): void {
+    #percentue(): void {
         let numero1: number = this.#operando1.convertaDigitosParaNumeros()
         let numero2: number = this.#operando2.convertaDigitosParaNumeros()
 
@@ -178,19 +152,19 @@ export default class CpuB3 implements Cpu {
         this.recebaControle(Controle.IGUAL)
 
     }
-    igual(): void {
+    #igual(): void {
         switch(this.#operador){
             case Operação.SOMA:
-                this.some()
+                this.#some()
                 break
             case Operação.SUBTRAÇÃO:
-                this.diminua()
+                this.#diminua()
                 break
             case Operação.MULTIPLICAÇÃO:
-                this.multiplique()
+                this.#multiplique()
                 break
             case Operação.DIVISÃO:
-                this.divida()
+                this.#divida()
                 break
         }
     }
