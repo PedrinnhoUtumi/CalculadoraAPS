@@ -31,7 +31,7 @@ export enum Controle {
 }
 
 export enum Sinal {
-  NEGATIVO, 
+  NEGATIVO,
   POSITIVO,
 }
 
