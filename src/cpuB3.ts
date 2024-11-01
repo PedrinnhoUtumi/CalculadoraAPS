@@ -9,7 +9,6 @@ export default class CpuB3 implements Cpu {
     #operador: Operação | undefined = undefined; 
     #separadorDecimal: Controle | undefined = undefined;
     #memoria: NumeroB3 = new NumeroB3();
-    #operacaoCorrente: Operação | undefined = undefined;
     #historicoControle: Controle | undefined = undefined
 
     constructor(tela: Tela) {
@@ -39,7 +38,6 @@ export default class CpuB3 implements Cpu {
             this.recebaControle(Controle.IGUAL)            
         }
         this.#operador = operação
-        this.#operacaoCorrente = operação
     }
     recebaControle(controle: Controle): void {
         switch(controle){
@@ -57,10 +55,27 @@ export default class CpuB3 implements Cpu {
                 break
             // case Controle.DESATIVAÇÃO:
             // case Controle.ATIVAÇÃO_LIMPEZA_ERRO:
-            // case Controle.MEMÓRIA_LEITURA_LIMPEZA:
-            //     if 
-            // case Controle.MEMÓRIA_SOMA:
-            // case Controle.MEMÓRIA_SUBTRAÇÃO:
+            case Controle.MEMÓRIA_LEITURA_LIMPEZA:
+                if (this.#historicoControle === Controle.MEMÓRIA_LEITURA_LIMPEZA) {
+                    this.#memoriaLimpeza();
+                } else {
+                    this.#memoriaLeitura(this.#memoria);
+                }
+              break;
+              case Controle.MEMÓRIA_SOMA:
+                this.#memoriaSoma();
+                if (this.#operador !== undefined) {
+                    const valorOperando1 = this.#operando1.convertaDigitosParaNumeros();
+                    this.#memoria.convertaNumerosParaDigitos(valorOperando1);
+                    this.tela.limpe();
+                }
+                case Controle.MEMÓRIA_SUBTRAÇÃO:
+                    this.#memoriaSubtracao();
+                if (this.#operador !== undefined) {
+                    const valorOperando1 = this.#operando1.convertaDigitosParaNumeros();
+                    this.#memoria.convertaNumerosParaDigitos(valorOperando1);
+                    this.tela.limpe();
+                }
         }
         this.#historicoControle = controle
 
@@ -70,6 +85,35 @@ export default class CpuB3 implements Cpu {
     }
     obtenhaTela(): Tela {
         return this.tela
+    }
+    #memoriaLeitura(numero: NumeroB3): void {
+        const valorMemoria = this.#memoria.convertaDigitosParaNumeros()
+        if (this.#operador === undefined) {
+            this.#operando2.convertaNumerosParaDigitos(valorMemoria) 
+            numero.sinal = valorMemoria >= 0 ? Sinal.POSITIVO : Sinal.NEGATIVO;
+            this.#mostreNumero(this.#operando2)
+        } else {
+            this.#operando1.convertaNumerosParaDigitos(valorMemoria) 
+            numero.sinal = valorMemoria >= 0 ? Sinal.POSITIVO:Sinal.NEGATIVO;
+            this.#mostreNumero(this.#operando1)
+        }
+      }
+    #memoriaLimpeza() {
+        throw new Error("Method not implemented.");
+      }
+    #memoriaSoma(): void {
+        this.recebaControle(Controle.IGUAL);
+        const valorAtual = this.#operando1.convertaDigitosParaNumeros();
+        const valorMemoria = this.#memoria.convertaDigitosParaNumeros();
+        const novoValor = valorMemoria + valorAtual;
+        this.#memoria.convertaNumerosParaDigitos(novoValor);
+    }
+    #memoriaSubtracao(): void {
+        this.recebaControle(Controle.IGUAL);
+        const valorAtual = this.#operando1.convertaDigitosParaNumeros();
+        const valorMemoria = this.#memoria.convertaDigitosParaNumeros();
+        const novoValor = valorMemoria - valorAtual;
+        this.#memoria.convertaNumerosParaDigitos(novoValor);
     }
     reinicie(): void {
         this.tela.limpe()
