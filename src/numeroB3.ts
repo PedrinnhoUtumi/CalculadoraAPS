@@ -18,8 +18,6 @@ export class NumeroB3 {
         return this.digitos.length > 0
     }
 
-
-
     convertaDigitosParaNumeros(): number {
         let resultadoInteiro = 0, resultadoDecimal = 0
         let digitosInteiros = this.digitos.slice(0, this.posicaoSeparadorDecimal ? this.posicaoSeparadorDecimal : this.digitos.length)
