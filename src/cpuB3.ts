@@ -88,12 +88,11 @@ export default class CpuB3 implements Cpu {
     if (this.#operador !== undefined) {
       this.#operando2.convertaNumerosParaDigitos(valorMemoria);
       this.#mostreNumero(this.#operando2);
-      this.tela.mostreMemoria()
+      this.tela.mostreMemoria();
     } else {
       this.#operando1.convertaNumerosParaDigitos(valorMemoria);
       this.#mostreNumero(this.#operando1);
-      this.tela.mostreMemoria()
-
+      this.tela.mostreMemoria();
     }
   }
   #memoriaLimpeza() {
@@ -127,8 +126,6 @@ export default class CpuB3 implements Cpu {
       this.tela.mostre(digito);
     });
     this.tela.mostreSinal(numero.sinal);
-    console.log("oifogoipgteo sinalllll")
-    console.log(numero.sinal)
   }
 
   #some(): void {
@@ -145,7 +142,7 @@ export default class CpuB3 implements Cpu {
     let numero2: number = this.#operando2.convertaDigitosParaNumeros();
 
     if (numero1 < numero2) {
-        console.log("ola estamos aqui diva")
+      console.log("ola estamos aqui diva");
       this.tela.mostreSinal(Sinal.NEGATIVO);
       var resultado = numero2 - numero1;
     } else {
@@ -200,18 +197,33 @@ export default class CpuB3 implements Cpu {
     }
   }
   #percentue(): void {
+    // let numero1: number = this.#operando1.convertaDigitosParaNumeros();
+    // let numero2: number = this.#operando2.convertaDigitosParaNumeros();
+
+    
+    // let percentualPrimeiroNumero = numero1 * (numero2 / 100);
+    // numero1 = numero1 + percentualPrimeiroNumero;
+    
+    // this.#operando1.convertaNumerosParaDigitos(percentualPrimeiroNumero);
+    
+    // this.recebaControle(Controle.IGUAL);
+    
+    
+    
     let numero1: number = this.#operando1.convertaDigitosParaNumeros();
     let numero2: number = this.#operando2.convertaDigitosParaNumeros();
 
-    if (!numero2) {
-      this.tela.limpe();
-      this.tela.mostre(Digito.ZERO);
-    }
+    // if (this.#operando2.temDigito()) {
+    //   console.log(numero2);
+    // } else {
+    //   this.tela.limpe();
+    //   this.tela.mostre(Digito.ZERO);
+    // }
 
-    let percentualPrimeiroNumero = numero1 * (numero2 / 100);
-    numero1 = numero1 + percentualPrimeiroNumero;
+    let resultado = (numero1 * numero2) / 100;
 
-    this.#operando1.convertaNumerosParaDigitos(percentualPrimeiroNumero);
+    this.#operando2.convertaNumerosParaDigitos(resultado);
+    this.#mostreNumero(this.#operando2);
 
     this.recebaControle(Controle.IGUAL);
   }
