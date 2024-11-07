@@ -15,9 +15,9 @@ teclado.digiteDigito(Digito.ZERO)
 teclado.digiteDigito(Digito.ZERO)
 //teclado.digiteDigito(Digito.QUATRO)
 //teclado.digiteOperacao(Operação.RAIZ_QUADRADA)
-teclado.digiteOperacao(Operação.SOMA)
+//teclado.digiteOperacao(Operação.SOMA)
 //teclado.digiteDigito(Digito.DOIS)
-//teclado.digiteOperacao(Operação.MULTIPLICAÇÃO)
+teclado.digiteOperacao(Operação.MULTIPLICAÇÃO)
 //teclado.digiteDigito(Digito.TRÊS)
 //teclado.digiteControle(Controle.MEMÓRIA_SOMA)
 //teclado.digiteOperacao(Operação.DIVISÃO)
@@ -42,4 +42,4 @@ teclado.digiteOperacao(Operação.PERCENTUAL)
 
 
 
-teclado.digiteControle(Controle.IGUAL)
+//teclado.digiteControle(Controle.IGUAL)

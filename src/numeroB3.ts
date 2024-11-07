@@ -35,6 +35,8 @@ export class NumeroB3 {
 
     convertaNumerosParaDigitos(resultado: number): void {
         let result: Digito[] = []
+        this.sinal = resultado >= 0 ? Sinal.POSITIVO : Sinal.NEGATIVO
+        resultado = Math.abs(resultado)
         while (resultado > 0) {
             let digito = resultado % 10
             result.push(digito)
@@ -44,6 +46,5 @@ export class NumeroB3 {
             result.push(Digito.ZERO)
         }
         this.digitos = result.reverse()
-        this.sinal = resultado >= 0 ? Sinal.POSITIVO : Sinal.NEGATIVO
     }
 }
