@@ -6,9 +6,7 @@ export class NumeroB3 {
     sinal: Sinal = Sinal.POSITIVO
 
     constructor() {
-
     }
-
 
     temSeparador(): boolean {
         return this.posicaoSeparadorDecimal === 0

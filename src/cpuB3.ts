@@ -9,7 +9,6 @@ export default class CpuB3 implements Cpu {
   #memoria: NumeroB3 = new NumeroB3();
   #historicoControle: Controle = Controle.IGUAL;
   #bandeiraM: boolean = false;
-  
 
   constructor(tela: Tela) {
     this.definaTela(tela);
@@ -48,19 +47,17 @@ export default class CpuB3 implements Cpu {
 
     this.#operador = operação;
   }
-  
+
   recebaControle(controle: Controle): void {
     switch (controle) {
       case Controle.IGUAL:
-        while (true){
-          console.log("eeeeeeeeee")
-          console.log(this.#operador)
+        while (true) {
           this.#igual();
           break;
         }
         break;
       case Controle.SEPARADOR_DECIMAL:
-        this.#separadorDecimal()
+        this.#separadorDecimal();
         break;
       case Controle.MEMÓRIA_LEITURA_LIMPEZA:
         if (this.#historicoControle === Controle.MEMÓRIA_LEITURA_LIMPEZA) {
@@ -78,7 +75,7 @@ export default class CpuB3 implements Cpu {
     }
     this.#historicoControle = controle;
   }
-  
+
   definaTela(tela: Tela): void {
     this.tela = tela;
   }
@@ -122,27 +119,31 @@ export default class CpuB3 implements Cpu {
     this.#memoria.convertaNumerosParaDigitos(novoValor);
   }
 
-  #separadorDecimal() : void {
+  #separadorDecimal(): void {
     if (this.#operador === undefined) {
       if (this.#operando1.posicaoSeparadorDecimal === -1)
         this.#operando1.posicaoSeparadorDecimal =
           this.#operando1.digitos.length;
+          this.tela.mostreSeparadorDecimal()
     } else {
       if (this.#operando2.posicaoSeparadorDecimal === -1)
         this.#operando2.posicaoSeparadorDecimal =
           this.#operando2.digitos.length;
+          this.tela.mostreSeparadorDecimal()
     }
+
+    console.log(this.#operando1)
   }
 
   reinicie(): void {
     this.tela.limpe();
     this.tela.mostre(Digito.ZERO);
-    this.#memoriaLimpeza()
+    this.#memoriaLimpeza();
   }
 
   #mostreNumero(numero: NumeroB3): void {
     this.tela.limpe();
-    
+
     this.tela.mostreSinal(numero.sinal);
     numero.digitos.forEach((digito) => {
       this.tela.mostre(digito);
@@ -154,7 +155,7 @@ export default class CpuB3 implements Cpu {
     let numero2: number = this.#operando2.convertaDigitosParaNumeros();
 
     let resultado = numero1 + numero2;
-    
+
     this.#operando1.convertaNumerosParaDigitos(resultado);
     this.#mostreNumero(this.#operando1);
   }
@@ -178,7 +179,6 @@ export default class CpuB3 implements Cpu {
     this.#operando1.convertaNumerosParaDigitos(resultado);
 
     this.#mostreNumero(this.#operando1);
-  
   }
 
   #divida(): void {
@@ -217,54 +217,56 @@ export default class CpuB3 implements Cpu {
   }
 
   #percentue(): void {
-   
     let numero1: number = this.#operando1.convertaDigitosParaNumeros();
     let numero2: number = this.#operando2.convertaDigitosParaNumeros();
     let resultado: number;
-    
+
     if (numero2 === undefined) {
-      resultado = numero1
+      resultado = numero1;
       return;
     }
-    
-    if (this.#operador === Operação.SOMA || this.#operador === Operação.SUBTRAÇÃO){
+
+    if (
+      this.#operador === Operação.SOMA ||
+      this.#operador === Operação.SUBTRAÇÃO
+    ) {
       resultado = (numero1 * numero2) / 100;
-      resultado = this.#operador === Operação.SOMA ? numero1 + resultado : numero1 - resultado 
-      this.#operando2.convertaNumerosParaDigitos(this.#operando1.convertaDigitosParaNumeros())
+      resultado =
+        this.#operador === Operação.SOMA
+          ? numero1 + resultado
+          : numero1 - resultado;
+      this.#operando2.convertaNumerosParaDigitos(
+        this.#operando1.convertaDigitosParaNumeros()
+      );
       this.#operando1.convertaNumerosParaDigitos(resultado);
       this.#mostreNumero(this.#operando1);
-    } 
-    else if (this.#operador === Operação.MULTIPLICAÇÃO){
-      resultado = (numero1 * numero2) / 100;   
-      this.#operando2.convertaNumerosParaDigitos(resultado)
+    } else if (this.#operador === Operação.MULTIPLICAÇÃO) {
+      resultado = (numero1 * numero2) / 100;
+      this.#operando2.convertaNumerosParaDigitos(resultado);
       this.#mostreNumero(this.#operando2);
-    } 
-    else {
-      resultado = numero2 / 100
-      resultado = numero1 / resultado
-      this.#operando1.convertaNumerosParaDigitos(resultado)
-      this.#mostreNumero(this.#operando1)
-      console.log(this.#operador)
+    } else {
+      resultado = numero2 / 100;
+      resultado = numero1 / resultado;
+      this.#operando1.convertaNumerosParaDigitos(resultado);
+      this.#mostreNumero(this.#operando1);
     }
   }
 
   #igual(): void {
-    switch (this.#operador) {
-      case Operação.SOMA:
-        this.#some();
-        break;
-      case Operação.SUBTRAÇÃO:
-        this.#diminua();
-        break;
-      case Operação.MULTIPLICAÇÃO:
-        this.#multiplique();
-        break;
-      case Operação.DIVISÃO:
-        console.log("tatatatatatatatat")
-        this.#divida();
-        break;
+      switch (this.#operador) {
+        case Operação.SOMA:
+          this.#some();
+          break;
+        case Operação.SUBTRAÇÃO:
+          this.#diminua();
+          break;
+        case Operação.MULTIPLICAÇÃO:
+          this.#multiplique();
+          break;
+        case Operação.DIVISÃO:
+          this.#divida();
+          break;
     }
-   
 
     // this.#operador = undefined;
     // this.#operando2 = new NumeroB3();
