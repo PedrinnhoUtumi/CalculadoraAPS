@@ -20,6 +20,7 @@ export default class TelaB3 implements Tela {
     }
 
     limpe(): void {
-        console.clear()
+        console.log(" ")
+        //console.clear()
     }
 }
