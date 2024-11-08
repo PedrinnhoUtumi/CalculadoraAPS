@@ -72,6 +72,9 @@ export default class CpuB3 implements Cpu {
       case Controle.MEMÓRIA_SUBTRAÇÃO:
         this.#memoriaSubtracao();
         break;
+      case Controle.DESATIVAÇÃO:
+          this.reinicie()
+          break;
     }
     this.#historicoControle = controle;
   }
@@ -121,18 +124,16 @@ export default class CpuB3 implements Cpu {
 
   #separadorDecimal(): void {
     if (this.#operador === undefined) {
-      if (this.#operando1.posicaoSeparadorDecimal === -1)
+      if (this.#operando1.posicaoSeparadorDecimal === 0)
         this.#operando1.posicaoSeparadorDecimal =
           this.#operando1.digitos.length;
-          this.tela.mostreSeparadorDecimal()
+      this.tela.mostreSeparadorDecimal();
     } else {
-      if (this.#operando2.posicaoSeparadorDecimal === -1)
+      if (this.#operando2.posicaoSeparadorDecimal === 0)
         this.#operando2.posicaoSeparadorDecimal =
           this.#operando2.digitos.length;
-          this.tela.mostreSeparadorDecimal()
+      this.tela.mostreSeparadorDecimal();
     }
-
-    console.log(this.#operando1)
   }
 
   reinicie(): void {
@@ -145,8 +146,20 @@ export default class CpuB3 implements Cpu {
     this.tela.limpe();
 
     this.tela.mostreSinal(numero.sinal);
+
     numero.digitos.forEach((digito) => {
-      this.tela.mostre(digito);
+      const temParteDecimal = digito % 1 !== 0;
+      if (temParteDecimal) {
+        console.log(digito.toFixed(0)) //aqui ele pega o numero que tem a parte decimal, e deixa so o inteiro
+        this.tela.mostreSeparadorDecimal();
+        let parteDecimal = digito - Math.floor(digito) //aq ele pega somente a parte decimal do numero
+        let parteDecimalMultiplicada = (parteDecimal * 100).toFixed(0); //ele pega a perte decimal e mexe somento com dois digitos dela (dois digitos apos a virgula)
+        for (let i = 0; i < parteDecimalMultiplicada.length; i++) {
+          console.log(parteDecimalMultiplicada[i]); //aqui ele mostra na tela um embaixo do outro
+        }
+    } else {
+        console.log(digito);
+    }
     });
   }
 
@@ -253,22 +266,20 @@ export default class CpuB3 implements Cpu {
   }
 
   #igual(): void {
-      switch (this.#operador) {
-        case Operação.SOMA:
-          this.#some();
-          break;
-        case Operação.SUBTRAÇÃO:
-          this.#diminua();
-          break;
-        case Operação.MULTIPLICAÇÃO:
-          this.#multiplique();
-          break;
-        case Operação.DIVISÃO:
-          this.#divida();
-          break;
+    switch (this.#operador) {
+      case Operação.SOMA:
+        this.#some();
+        break;
+      case Operação.SUBTRAÇÃO:
+        this.#diminua();
+        break;
+      case Operação.MULTIPLICAÇÃO:
+        this.#multiplique();
+        break;
+      case Operação.DIVISÃO:
+        this.#divida();
+        break;
     }
 
-    // this.#operador = undefined;
-    // this.#operando2 = new NumeroB3();
   }
 }

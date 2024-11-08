@@ -5,7 +5,7 @@ export default class TelaB3 implements Tela {
         console.log("M   M\nMM MM\nM M M\nM   M\nM   M\n");
     }
     mostreSeparadorDecimal(): void {
-        console.log("..\n..\n");
+        console.log("..");
     }
     mostreSinal(sinal: Sinal): void {
         if (sinal === Sinal.NEGATIVO) {
@@ -20,7 +20,6 @@ export default class TelaB3 implements Tela {
     }
 
     limpe(): void {
-        //console.log(' ')
         console.clear()
     }
 }
