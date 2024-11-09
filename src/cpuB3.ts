@@ -73,8 +73,8 @@ export default class CpuB3 implements Cpu {
         this.#memoriaSubtracao();
         break;
       case Controle.DESATIVAÇÃO:
-          this.reinicie()
-          break;
+        this.reinicie();
+        break;
     }
     this.#historicoControle = controle;
   }
@@ -150,16 +150,16 @@ export default class CpuB3 implements Cpu {
     numero.digitos.forEach((digito) => {
       const temParteDecimal = digito % 1 !== 0;
       if (temParteDecimal) {
-        console.log(digito.toFixed(0)) //aqui ele pega o numero que tem a parte decimal, e deixa so o inteiro
+        console.log(digito.toFixed(0)); //aqui ele pega o numero que tem a parte decimal, e deixa so o inteiro
         this.tela.mostreSeparadorDecimal();
-        let parteDecimal = digito - Math.floor(digito) //aq ele pega somente a parte decimal do numero
+        let parteDecimal = digito - Math.floor(digito); //aq ele pega somente a parte decimal do numero
         let parteDecimalMultiplicada = (parteDecimal * 100).toFixed(0); //ele pega a perte decimal e mexe somento com dois digitos dela (dois digitos apos a virgula)
         for (let i = 0; i < parteDecimalMultiplicada.length; i++) {
           console.log(parteDecimalMultiplicada[i]); //aqui ele mostra na tela um embaixo do outro
         }
-    } else {
+      } else {
         console.log(digito);
-    }
+      }
     });
   }
 
@@ -219,7 +219,6 @@ export default class CpuB3 implements Cpu {
 
     let resultado = numero1 ** 0.5;
 
-    // Armazena o resutado no destino correto
     if (this.#operador !== undefined) {
       this.#operando2.convertaNumerosParaDigitos(resultado);
       this.#mostreNumero(this.#operando2);
@@ -280,6 +279,5 @@ export default class CpuB3 implements Cpu {
         this.#divida();
         break;
     }
-
   }
 }

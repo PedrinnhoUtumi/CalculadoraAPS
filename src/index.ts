@@ -10,43 +10,34 @@ tela.limpe()
 const cpu = new CpuB3(tela)
 
 const teclado = new TecladoB3(cpu)
-teclado.digiteDigito(Digito.UM)
-teclado.digiteDigito(Digito.DOIS)
-teclado.digiteDigito(Digito.TRÊS)
-//teclado.digiteDigito(Digito.QUATRO)
-//teclado.digiteOperacao(Operação.RAIZ_QUADRADA)
-//teclado.digiteOperacao(Operação.MULTIPLICAÇÃO)
-//teclado.digiteDigito(Digito.TRÊS)
-//teclado.digiteControle(Controle.MEMÓRIA_SOMA)
-//teclado.digiteOperacao(Operação.SOMA)
-// teclado.digiteOperacao(Operação.DIVISÃO)
+
+/* DÍGITOS */
+
 //teclado.digiteDigito(Digito.UM)
-// teclado.digiteDigito(Digito.ZERO)
-//teclado.digiteControle(Controle.MEMÓRIA_SOMA)
-//teclado.digiteDigito(Digito.ZERO)
-//teclado.digiteOperacao(Operação.SOMA)
-teclado.digiteControle(Controle.SEPARADOR_DECIMAL)
-teclado.digiteDigito(Digito.UM)
-teclado.digiteDigito(Digito.UM)
-teclado.digiteDigito(Digito.UM)
-//teclado.digiteControle(Controle.MEMÓRIA_SOMA)
-teclado.digiteOperacao(Operação.SOMA)
-//teclado.digiteDigito(Digito.UM)
-//teclado.digiteControle(Controle.SEPARADOR_DECIMAL)
-teclado.digiteDigito(Digito.UM)
-
-//teclado.digiteControle(Controle.MEMÓRIA_LEITURA_LIMPEZA)
-
-//teclado.digiteControle(Controle.IGUAL)
-// teclado.digiteOperacao(Operação.RAIZ_QUADRADA)
-//teclado.digiteControle(Controle.MEMÓRIA_LEITURA_LIMPEZA)
-// teclado.digiteDigito(Digito.SETE)
-
-
-
-//teclado.digiteControle(Controle.IGUAL)
-//teclado.digiteControle(Controle.MEMÓRIA_LEITURA_LIMPEZA)
 //teclado.digiteDigito(Digito.DOIS)
-teclado.digiteControle(Controle.IGUAL)
+//teclado.digiteDigito(Digito.TRÊS)
+//teclado.digiteDigito(Digito.QUATRO)
+//teclado.digiteDigito(Digito.CINCO)
+//teclado.digiteDigito(Digito.SEIS)
+//teclado.digiteDigito(Digito.SETE)
+//teclado.digiteDigito(Digito.OITO)
+//teclado.digiteDigito(Digito.NOVE)
 
-teclado.digiteControle(Controle.DESATIVAÇÃO)
+/* OPERAÇÕES */
+
+//teclado.digiteOperacao(Operação.SOMA)
+//teclado.digiteOperacao(Operação.SUBTRAÇÃO)
+//teclado.digiteOperacao(Operação.MULTIPLICAÇÃO)
+//teclado.digiteOperacao(Operação.DIVISÃO)
+//teclado.digiteOperacao(Operação.PERCENTUAL)
+//teclado.digiteOperacao(Operação.RAIZ_QUADRADA)
+
+/* CONTROLES */
+
+//teclado.digiteControle(Controle.DESATIVAÇÃO)
+//teclado.digiteControle(Controle.ATIVAÇÃO_LIMPEZA_ERRO)
+//teclado.digiteControle(Controle.MEMÓRIA_LEITURA_LIMPEZA)
+//teclado.digiteControle(Controle.MEMÓRIA_SOMA)
+//teclado.digiteControle(Controle.MEMÓRIA_SUBTRAÇÃO)
+//teclado.digiteControle(Controle.SEPARADOR_DECIMAL)
+//teclado.digiteControle(Controle.IGUAL)
