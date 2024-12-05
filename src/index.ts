@@ -3,6 +3,7 @@ import { Controle, Digito, Operação } from "./calculadora";
 import CpuB3 from "./cpuB3";
 import TelaB3 from "./telaB3";
 import TecladoB3 from "./tecladoB3";
+import { TestadorCpu } from "./calculadoraTestes";
 
 const tela = new TelaB3()
 tela.limpe()
@@ -10,6 +11,8 @@ tela.limpe()
 const cpu = new CpuB3(tela)
 
 const teclado = new TecladoB3(cpu)
+
+new TestadorCpu(cpu, true , true).executeTodosTestes()
 
 /* DÍGITOS */
 
