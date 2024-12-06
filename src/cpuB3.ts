@@ -104,7 +104,7 @@ export default class CpuB3 implements Cpu {
   }
 
   #memoriaSoma(): void {
-    this.recebaControle(Controle.IGUAL);
+    //this.recebaControle(Controle.IGUAL);
     const valorAtual = this.#operando1.convertaDigitosParaNumeros();
     const valorMemoria = this.#memoria.convertaDigitosParaNumeros();
     const novoValor = valorMemoria + valorAtual;
@@ -114,7 +114,7 @@ export default class CpuB3 implements Cpu {
 
   #memoriaSubtracao(): void {
     this.#bandeiraM = true;
-    this.recebaControle(Controle.IGUAL);
+    //this.recebaControle(Controle.IGUAL);
     const valorAtual = this.#operando1.convertaDigitosParaNumeros();
     const valorMemoria = this.#memoria.convertaDigitosParaNumeros();
     const novoValor = valorMemoria - valorAtual;
@@ -180,7 +180,6 @@ export default class CpuB3 implements Cpu {
 
     this.#operando1.convertaNumerosParaDigitos(resultado);
     this.#mostreNumero(this.#operando1);
-    console.log("Teste",resultado,"=", this.#operando1.digitos, this.#operando2.digitos)
   }
 
   #diminua(): void {
@@ -275,19 +274,25 @@ export default class CpuB3 implements Cpu {
   }
 
   #igual(): void {
-    switch (this.#operador) {
-      case Operação.SOMA:
-        this.#some();
-        break;
-      case Operação.SUBTRAÇÃO:
-        this.#diminua();
-        break;
-      case Operação.MULTIPLICAÇÃO:
-        this.#multiplique();
-        break;
-      case Operação.DIVISÃO:
-        this.#divida();
-        break;
+    if (this.#operador == undefined){
+      this.#operando1.convertaDigitosParaNumeros()
+      this.#mostreNumero(this.#operando1)
+    } else {
+
+      switch (this.#operador) {
+        case Operação.SOMA:
+          this.#some();
+          break;
+        case Operação.SUBTRAÇÃO:
+          this.#diminua();
+          break;
+        case Operação.MULTIPLICAÇÃO:
+          this.#multiplique();
+          break;
+        case Operação.DIVISÃO:
+          this.#divida();
+          break;
+      }
     }
   }
 }

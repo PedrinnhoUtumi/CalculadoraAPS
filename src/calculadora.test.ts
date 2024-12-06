@@ -11,7 +11,8 @@ describe("Testando minha calculadora", () => {
     beforeEach(() => {
         cpu.reinicie()
         tela.debug = false
-
+        tela.memoria = false
+        tela.error = false
     })
 
     test("teste soma 12 + 34", () => {
@@ -279,21 +280,21 @@ describe("Testando minha calculadora", () => {
         expect(tela.error).toBeFalsy()
     })
     
-    // test("teste 123 = 1 ", () => {
-    //     [Digito.UM, Digito.DOIS, Digito.TRÊS].forEach((element) => {
-    //         cpu.recebaDigito(element);
-    //     });
-    //     cpu.recebaControle(Controle.IGUAL);
-    //     [Digito.UM].forEach((element) => {
-    //         cpu.recebaDigito(element);
-    //     });
+    test("teste 123 = 1 =", () => {
+        [Digito.UM, Digito.DOIS, Digito.TRÊS].forEach((element) => {
+            cpu.recebaDigito(element);
+        });
+        cpu.recebaControle(Controle.IGUAL);
+        [Digito.UM].forEach((element) => {
+            cpu.recebaDigito(element);
+        });
         
-    //     cpu.recebaControle(Controle.IGUAL)
-    //     expect(tela.digitos).toBe("1")
-    //     expect(tela.sinal).toBe(Sinal.POSITIVO)
-    //     expect(tela.memoria).toBeFalsy()
-    //     expect(tela.error).toBeFalsy()
-    // })
+        cpu.recebaControle(Controle.IGUAL)
+        expect(tela.digitos).toBe("1")
+        expect(tela.sinal).toBe(Sinal.POSITIVO)
+        expect(tela.memoria).toBeFalsy()
+        expect(tela.error).toBeFalsy()
+    })
 
     test("teste 123M+ 1 + 1 =", () => {
         [Digito.UM, Digito.DOIS, Digito.TRÊS].forEach((element) => {
@@ -314,24 +315,23 @@ describe("Testando minha calculadora", () => {
         expect(tela.memoria).toBeFalsy()
         expect(tela.error).toBeFalsy()
     })
-    // test("teste 123M+ + 1 1M+", () => {
-    //     [Digito.UM, Digito.DOIS, Digito.TRÊS].forEach((element) => {
-    //         cpu.recebaDigito(element);
-    //     });
-    //     cpu.recebaControle(Controle.MEMÓRIA_SOMA);
-    //     cpu.recebaOperacao(Operação.SOMA);
-    //     [Digito.UM].forEach((element) => {
-    //         cpu.recebaDigito(element);
-    //     });
-    //     cpu.recebaControle(Controle.MEMÓRIA_SOMA);
-    //     cpu.recebaControle(Controle.IGUAL)
-    //     expect(tela.digitos).toBe("124")
-    //     expect(tela.sinal).toBe(Sinal.POSITIVO)
-    //     expect(tela.memoria).toBeFalsy()
-    //     expect(tela.error).toBeFalsy()
-    // })
 
-    
+    test("teste 123M+ + 1 1M+", () => {
+        [Digito.UM, Digito.DOIS, Digito.TRÊS].forEach((element) => {
+            cpu.recebaDigito(element);
+        });
+        cpu.recebaControle(Controle.MEMÓRIA_SOMA);
+        cpu.recebaOperacao(Operação.SOMA);
+        [Digito.UM].forEach((element) => {
+            cpu.recebaDigito(element);
+        });
+        cpu.recebaControle(Controle.MEMÓRIA_SOMA);
+        cpu.recebaControle(Controle.IGUAL)
+        expect(tela.digitos).toBe("124")
+        expect(tela.sinal).toBe(Sinal.POSITIVO)
+        expect(tela.memoria).toBeFalsy()
+        expect(tela.error).toBeFalsy()
+    })
 
     test("teste 3 + 50% ", () => {
         [Digito.TRÊS].forEach((element) => {
@@ -397,6 +397,112 @@ describe("Testando minha calculadora", () => {
         expect(tela.error).toBeFalsy()
     })
 
+    test("123M+ + 1 MRC = ", () => {
+        [Digito.UM, Digito.DOIS, Digito.TRÊS].forEach((element) => {
+            cpu.recebaDigito(element)
+        });
+        [Controle.MEMÓRIA_SOMA].forEach((element) => {
+            cpu.recebaControle(element)
+        });
+        [Operação.SOMA].forEach((element) => {
+            cpu.recebaOperacao(element)
+        });
+        [Digito.UM].forEach((element) => {
+            cpu.recebaDigito(element)
+        });
+        [Controle.MEMÓRIA_LEITURA_LIMPEZA].forEach((element) => {
+            cpu.recebaControle(element)
+        });
+        [Controle.IGUAL].forEach((element) => {
+            cpu.recebaControle(element)
+        });
+        expect(tela.digitos).toBe("246")
+        expect(tela.sinal).toBe(Sinal.POSITIVO)
+        expect(tela.memoria).toBeTruthy()
+        expect(tela.error).toBeFalsy()
+    })
+
+    test("123M+ + 1 MRC 1 =", () => {
+        [Digito.UM, Digito.DOIS, Digito.TRÊS].forEach((element) => {
+            cpu.recebaDigito(element)
+        });
+        [Controle.MEMÓRIA_SOMA].forEach((element) => {
+            cpu.recebaControle(element)
+        });
+        [Operação.SOMA].forEach((element) => {
+            cpu.recebaOperacao(element)
+        });
+        [Digito.UM].forEach((element) => {
+            cpu.recebaDigito(element)
+        });
+        [Controle.MEMÓRIA_LEITURA_LIMPEZA].forEach((element) => {
+            cpu.recebaControle(element)
+        });
+        [Digito.UM].forEach((element) => {
+            cpu.recebaDigito(element)
+        });
+        [Controle.IGUAL].forEach((element) => {
+            cpu.recebaControle(element)
+        });
+        expect(tela.digitos).toBe("124")
+        expect(tela.sinal).toBe(Sinal.POSITIVO)
+        expect(tela.memoria).toBeTruthy()
+        expect(tela.error).toBeFalsy()
+    })
+
+    test("123M+ + 1 MRC MRC = ", () => {
+        [Digito.UM, Digito.DOIS, Digito.TRÊS].forEach((element) => {
+            cpu.recebaDigito(element)
+        });
+        [Controle.MEMÓRIA_SOMA].forEach((element) => {
+            cpu.recebaControle(element)
+        });
+        [Operação.SOMA].forEach((element) => {
+            cpu.recebaOperacao(element)
+        });
+        [Digito.UM].forEach((element) => {
+            cpu.recebaDigito(element)
+        });
+        [Controle.MEMÓRIA_LEITURA_LIMPEZA].forEach((element) => {
+            cpu.recebaControle(element)
+        });
+        [Controle.MEMÓRIA_LEITURA_LIMPEZA].forEach((element) => {
+            cpu.recebaControle(element)
+        });
+        [Controle.IGUAL].forEach((element) => {
+            cpu.recebaControle(element)
+        });
+        expect(tela.digitos).toBe("246")
+        expect(tela.sinal).toBe(Sinal.POSITIVO)
+        expect(tela.memoria).toBeTruthy()
+        expect(tela.error).toBeFalsy()
+    })
+
+    // test("123M- + 1 MRC = ", () => {
+    //     [Digito.UM, Digito.DOIS, Digito.TRÊS].forEach((element) => {
+    //         cpu.recebaDigito(element)
+    //     });
+    //     [Controle.MEMÓRIA_SUBTRAÇÃO].forEach((element) => {
+    //         cpu.recebaControle(element)
+    //     });
+    //     [Operação.SOMA].forEach((element) => {
+    //         cpu.recebaOperacao(element)
+    //     });
+    //     [Digito.UM].forEach((element) => {
+    //         cpu.recebaDigito(element)
+    //     });
+    //     [Controle.MEMÓRIA_LEITURA_LIMPEZA].forEach((element) => {
+    //         cpu.recebaControle(element)
+    //     });
+    //     [Controle.IGUAL].forEach((element) => {
+    //         cpu.recebaControle(element)
+    //     });
+    //     expect(tela.digitos).toBe("246")
+    //     expect(tela.sinal).toBe(Sinal.POSITIVO)
+    //     expect(tela.memoria).toBeTruthy()
+    //     expect(tela.error).toBeFalsy()
+    // })
+
      test("teste 20 / 0", () => {
         [Digito.DOIS, Digito.ZERO].forEach((element) => {
             cpu.recebaDigito(element)
@@ -411,5 +517,5 @@ describe("Testando minha calculadora", () => {
         expect(tela.error).toBeTruthy()
     })
     
-})
+ })
 
