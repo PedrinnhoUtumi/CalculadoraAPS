@@ -383,7 +383,18 @@ describe("Testando minha calculadora", () => {
     })
 
     test("teste divisao 12 / 10", () => {
-        [Digito.UM, Digito.DOIS].forEach((element) =
+        [Digito.UM, Digito.DOIS].forEach((element) => {
+        cpu.recebaDigito(element) 
+        });
+        cpu.recebaOperacao(Operação.DIVISÃO);
+        [Digito.UM, Digito.ZERO].forEach((element) => {
+        cpu.recebaDigito(element)
+        });
+    cpu.recebaControle(Controle.IGUAL);
+        expect(tela.digitos).toBe("1.20")
+        expect(tela.sinal).toBe(Sinal.POSITIVO)
+        expect(tela.memoria).toBeFalsy()
+        expect(tela.error).toBeFalsy()
     })
 
      test("teste 20 / 0", () => {
