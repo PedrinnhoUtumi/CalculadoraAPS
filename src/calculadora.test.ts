@@ -383,7 +383,7 @@ describe("Testando minha calculadora", () => {
     })
 
     test("teste divisao 12 / 10", () => {
-        [Digito.UM, Digito.DOIS].forEach((
+        [Digito.UM, Digito.DOIS].forEach((element) =
     })
 
      test("teste 20 / 0", () => {
