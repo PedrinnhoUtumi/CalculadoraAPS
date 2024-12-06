@@ -4,8 +4,16 @@ export class NumeroB3 {
     digitos: Digito[] = []
     posicaoSeparadorDecimal: number = 0
     sinal: Sinal = Sinal.POSITIVO
+    completo: boolean = false
 
     constructor() {
+    }
+
+    reinicie(): void {
+        this.digitos = []
+        this.posicaoSeparadorDecimal = 0
+        this.sinal = Sinal.POSITIVO
+        this.completo = false
     }
 
     temSeparador(): boolean {
@@ -17,6 +25,7 @@ export class NumeroB3 {
     }
 
     convertaDigitosParaNumeros(): number {
+        this.completo = true
         let resultadoInteiro = 0, resultadoDecimal = 0
         let digitosInteiros = this.digitos.slice(0, this.posicaoSeparadorDecimal ? this.posicaoSeparadorDecimal : this.digitos.length)
         let digitosDecimais = this.digitos.slice(this.posicaoSeparadorDecimal ? this.posicaoSeparadorDecimal : this.digitos.length).reverse()
@@ -32,6 +41,8 @@ export class NumeroB3 {
     }
 
     convertaNumerosParaDigitos(resultado: number): void {
+        this.completo = true
+
         let result: Digito[] = []
         this.sinal = resultado >= 0 ? Sinal.POSITIVO : Sinal.NEGATIVO
         resultado = Math.abs(resultado)

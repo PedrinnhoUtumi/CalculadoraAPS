@@ -21,12 +21,14 @@ export default class CpuB3 implements Cpu {
         this.#bandeiraM = false;
         this.#operando1 = new NumeroB3();
       }
+      if(this.#operando1.completo)this.#operando1.reinicie()
       this.#operando1.digitos.push(digito);
       this.tela.mostre(digito);
     } else {
       if (!this.#operando2.temDigito()) {
         this.tela.limpe();
       }
+      if(this.#operando2.completo)this.#operando2.reinicie()
       this.#operando2.digitos.push(digito);
       this.tela.mostre(digito);
     }
@@ -51,11 +53,8 @@ export default class CpuB3 implements Cpu {
   recebaControle(controle: Controle): void {
     switch (controle) {
       case Controle.IGUAL:
-        while (true) {
           this.#igual();
           break;
-        }
-        break;
       case Controle.SEPARADOR_DECIMAL:
         this.#separadorDecimal();
         break;
@@ -125,18 +124,20 @@ export default class CpuB3 implements Cpu {
   #separadorDecimal(): void {
     if (this.#operador === undefined) {
       if (this.#operando1.posicaoSeparadorDecimal === 0)
-        this.#operando1.posicaoSeparadorDecimal =
-          this.#operando1.digitos.length;
+        this.#operando1.posicaoSeparadorDecimal = this.#operando1.digitos.length;
       this.tela.mostreSeparadorDecimal();
     } else {
       if (this.#operando2.posicaoSeparadorDecimal === 0)
-        this.#operando2.posicaoSeparadorDecimal =
-          this.#operando2.digitos.length;
+        this.#operando2.posicaoSeparadorDecimal = this.#operando2.digitos.length;
       this.tela.mostreSeparadorDecimal();
     }
   }
 
   reinicie(): void {
+    this.#bandeiraM = false;
+    this.#operando1.convertaNumerosParaDigitos(0);
+    this.#operando2.convertaNumerosParaDigitos(0);
+    this.#operador = undefined;
     this.tela.limpe();
     this.tela.mostre(Digito.ZERO);
     this.#memoriaLimpeza();
@@ -149,16 +150,24 @@ export default class CpuB3 implements Cpu {
 
     numero.digitos.forEach((digito) => {
       const temParteDecimal = digito % 1 !== 0;
+      
+      if (isNaN(digito)) {
+        this.tela.mostre(Digito.ZERO); 
+        return; 
+      }
+
       if (temParteDecimal) {
-        console.log(digito.toFixed(0)); //aqui ele pega o numero que tem a parte decimal, e deixa so o inteiro
+        this.tela.mostre(Math.floor(digito)); // Mostra a parte inteira do número
+  
         this.tela.mostreSeparadorDecimal();
-        let parteDecimal = digito - Math.floor(digito); //aq ele pega somente a parte decimal do numero
-        let parteDecimalMultiplicada = (parteDecimal * 100).toFixed(0); //ele pega a perte decimal e mexe somento com dois digitos dela (dois digitos apos a virgula)
-        for (let i = 0; i < parteDecimalMultiplicada.length; i++) {
-          console.log(parteDecimalMultiplicada[i]); //aqui ele mostra na tela um embaixo do outro
-        }
+        
+        let parteDecimal = digito - Math.floor(digito); // pega a parte decimal
+        let parteDecimalMultiplicada = Math.round(parteDecimal * 100); // multiplica por 100 e arredonda para dois dígitos
+  
+        this.tela.mostre(Math.floor(parteDecimalMultiplicada / 10)); // primeiro dígito decimal
+        this.tela.mostre(parteDecimalMultiplicada % 10); // segundo dígito decimal
       } else {
-        console.log(digito);
+        this.tela.mostre(digito); // Se o número for inteiro, apenas exibe o dígito
       }
     });
   }
@@ -171,6 +180,7 @@ export default class CpuB3 implements Cpu {
 
     this.#operando1.convertaNumerosParaDigitos(resultado);
     this.#mostreNumero(this.#operando1);
+    console.log("Teste",resultado,"=", this.#operando1.digitos, this.#operando2.digitos)
   }
 
   #diminua(): void {
