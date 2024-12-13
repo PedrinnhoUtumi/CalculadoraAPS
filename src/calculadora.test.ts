@@ -29,7 +29,7 @@ describe("Testando minha calculadora", () => {
     expect(tela.error).toBeFalsy();
   });
 
-  test("teste soma 1 + 4 + 1", () => {
+  test("teste soma 1 + 4 + 1 => Natália", () => {
     [Digito.UM].forEach((element) => {
       cpu.recebaDigito(element);
     });
@@ -48,7 +48,7 @@ describe("Testando minha calculadora", () => {
     expect(tela.error).toBeFalsy();
   });
 
-  test("teste 5 - 3", () => {
+  test("teste 5 - 3 => Natália", () => {
     [Digito.CINCO].forEach((element) => {
       cpu.recebaDigito(element);
     });
@@ -64,7 +64,7 @@ describe("Testando minha calculadora", () => {
     expect(tela.error).toBeFalsy();
   });
 
-  test("teste 1 - 10", () => {
+  test("teste 1 - 10 => Natália", () => {
     [Digito.UM].forEach((element) => {
       cpu.recebaDigito(element);
     });
@@ -156,7 +156,7 @@ describe("Testando minha calculadora", () => {
     expect(tela.error).toBeFalsy();
   });
 
-  test("teste subtração 4 - 1 - 1", () => {
+  test("teste subtração 4 - 1 - 1 => Natália", () => {
     [Digito.QUATRO].forEach((element) => {
       cpu.recebaDigito(element);
     });
@@ -176,7 +176,7 @@ describe("Testando minha calculadora", () => {
     expect(tela.error).toBeFalsy();
   });
 
-  test("teste subtração 34 - 56", () => {
+  test("teste subtração 34 - 56 => Natália", () => {
     [Digito.TRÊS, Digito.QUATRO].forEach((element) => {
       cpu.recebaDigito(element);
     });
@@ -191,7 +191,7 @@ describe("Testando minha calculadora", () => {
     expect(tela.error).toBeFalsy();
   });
 
-  test("teste 1.5 + 3.4", () => {
+  test("teste 1.5 + 3.4 =", () => {
     [Digito.UM].forEach((element) => {
       cpu.recebaDigito(element);
     });
@@ -218,7 +218,7 @@ describe("Testando minha calculadora", () => {
     expect(tela.error).toBeFalsy();
   });
 
-  test("teste 3 + 50% ", () => {
+  test("teste 3 + 50% => Natália", () => {
     [Digito.TRÊS].forEach((element) => {
       cpu.recebaDigito(element);
     });
@@ -318,7 +318,7 @@ describe("Testando minha calculadora", () => {
     expect(tela.error).toBeFalsy();
   });
 
-  test("teste 3 + 50% ", () => {
+  test("teste 3 + 50% => Natália", () => {
     [Digito.TRÊS].forEach((element) => {
       cpu.recebaDigito(element);
     });
@@ -350,7 +350,7 @@ describe("Testando minha calculadora", () => {
     expect(tela.error).toBeFalsy();
   });
 
-  test("teste 3 + 50% ==", () => {
+  test("teste 3 + 50% == => Natália", () => {
     [Digito.TRÊS].forEach((element) => {
       cpu.recebaDigito(element);
     });
@@ -463,7 +463,7 @@ describe("Testando minha calculadora", () => {
     expect(tela.error).toBeFalsy();
   });
 
-  test("123M- + 1 = ", () => {
+  test("123M- + 1 = -> Natália", () => {
     [Digito.UM, Digito.DOIS, Digito.TRÊS].forEach((element) => {
       cpu.recebaDigito(element);
     });
@@ -485,7 +485,7 @@ describe("Testando minha calculadora", () => {
     expect(tela.error).toBeFalsy();
   });
 
-  test("123M- + 1 MRC = ", () => {
+  test("123M- + 1 MRC = => Natália", () => {
     [Digito.UM, Digito.DOIS, Digito.TRÊS].forEach((element) => {
       cpu.recebaDigito(element);
     });
@@ -523,7 +523,7 @@ describe("Testando minha calculadora", () => {
     expect(tela.memoria).toBeFalsy();
     expect(tela.error).toBeTruthy();
   });
-  test("teste 50 + 10 ÷ 2 × 3 - 5 + raiz de 16 + 10%", () => {
+  test("teste 50 + 10 ÷ 2 × 3 - 5 + raiz de 16 + 10% => Natália", () => {
     [Digito.CINCO, Digito.ZERO].forEach((element) => {
       cpu.recebaDigito(element);
     });
